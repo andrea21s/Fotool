@@ -1,31 +1,40 @@
-<p align="center"><img src="img/logo.png" width="120" alt="Logo di Fotool"></p>
+<p align="center"><img src="img/logo.png" width="120" alt="Fotool logo"></p>
 
 <h1 align="center">Fotool</h1>
-<p align="center"><b>Simulatore di fotocamere e obiettivi: dalla luce ai pixel</b><br>
-<a href="https://andrea21s.github.io/fotool/">andrea21s.github.io/fotool</a></p>
+<p align="center"><b>Camera and lens simulator: from light to pixels</b><br>
+<a href="https://andrea21s.github.io/Fotool/">andrea21s.github.io/Fotool</a></p>
 
-Fotool mostra come viene davvero una foto con una certa fotocamera e un certo obiettivo, prima di comprarli o di uscire a scattare. Scegli l'attrezzatura, muovi focale, diaframma e tempo, e guardi subito la foto e un suo pezzo al 100%, con diffrazione, difetti dell'obiettivo, mosso e rumore.
+Fotool shows what a photo really looks like with a given camera and lens, before you buy them or go out to shoot. Pick your gear, move focal length, aperture and shutter speed, and instantly see the photo and a 100% crop, with diffraction, lens aberrations, motion blur and noise.
 
-Dentro ci sono le schede di JuzaPhoto: oltre 1.400 fotocamere e 1.500 obiettivi e moltiplicatori, con la compatibilità tra attacchi, adattatori e sensori.
+It includes the JuzaPhoto database: over 1,400 cameras and 1,500 lenses and teleconverters, with compatibility between mounts, adapters and sensors.
 
-## Le sezioni
+> The interface is in Italian.
 
-- **Configura**: scegli fotocamera, obiettivo e moltiplicatore e guarda la foto in quattro scene: panorama, ritratto, Luna e controluce. Le caselle riassumono campanile o crateri, profondità di campo, esposizione, rumore e mosso.
-- **Confronta**: fino a quattro configurazioni una accanto all'altra. Copi una scheda, cambi un valore alla volta e vedi subito la differenza nella foto e nel dettaglio al 100%.
-- **Nitidezza**: il banco ottico mostra come la luce di un punto arriva ai pixel. Ci sono il disco di Airy, il DLA, il campionamento critico e il diaframma più nitido, più una demo guidata.
-- **Database**: tutte le schede, con ricerca, filtri, ordinamento e il collegamento alla scheda di JuzaPhoto.
-- **Guida**: sette lezioni (focale, diaframma, tempo, difetti, pixel, sensore, tutto insieme) in parole semplici, ognuna con un piccolo simulatore da provare.
+## Sections
 
-## Come funziona
+- **Configura (Set up)**: choose camera, lens and teleconverter and see the photo in four scenes: landscape, portrait, Moon and backlight. Tiles summarise subject size, depth of field, exposure, noise and motion blur.
+- **Confronta (Compare)**: up to four setups side by side. Duplicate one, change a single value and immediately see the difference in the photo and in the 100% crop.
+- **Nitidezza (Sharpness)**: an optical bench showing how the light from a point reaches the pixels. It covers the Airy disk, the diffraction-limited aperture, critical sampling and the sharpest f-stop, plus a guided demo.
+- **Database**: every JuzaPhoto entry, with search, filters, sorting and a link to the original page.
+- **Guida (Guide)**: seven plain-language lessons, each with a small built-in simulator:
+  - focal length;
+  - aperture;
+  - shutter speed;
+  - aberrations;
+  - pixels;
+  - sensor size;
+  - how they all work together.
 
-È una sola pagina HTML, senza server e senza installazione. Funziona su telefono, tablet e computer, in tema chiaro e scuro. Le configurazioni scelte restano salvate nel browser.
+## How it works
 
-I calcoli usano l'ottica di base:
-- diffrazione (disco di Airy), potere risolutivo e campionamento dei pixel (Nyquist);
-- un modello semplice dei difetti dell'obiettivo;
-- l'esposizione con l'ISO automatico, il rumore dei fotoni e quello di lettura;
-- il mosso: la Luna che attraversa il cielo e la mano con lo stabilizzatore.
+It is a single HTML page: no server, no install. It runs on phones, tablets and desktops, in light and dark mode. Your setups are saved in the browser.
 
-Sono stime per capire le differenze, non misure di laboratorio.
+The calculations use basic optics:
+- diffraction (Airy disk), resolving power and pixel sampling (Nyquist);
+- a simple model of lens aberrations;
+- exposure with auto ISO, plus photon and read noise;
+- motion blur from the Moon drifting across the sky and from handheld shooting with stabilisation.
 
-Dati delle fotocamere e degli obiettivi: [JuzaPhoto](https://www.juzaphoto.com).
+They are estimates meant to show differences, not lab measurements.
+
+Camera and lens data: [JuzaPhoto](https://www.juzaphoto.com).
