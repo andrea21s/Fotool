@@ -1,4 +1,5 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="img/logo.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}</style></head><body>
 <title>Fotool</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -571,6 +572,11 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
 #pkQ{height:44px;font:400 16px/1.3 var(--font-body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:0 12px}
 .pk-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
 .pk-tools:empty{display:none}
+.pk-sel{display:flex;align-items:center;gap:4px;height:32px;padding:0 4px 0 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.pk-sel.on{border-color:var(--accent);background:var(--accent-soft);color:var(--ink)}
+.pk-sel select{max-width:11em;height:30px;border:0;background:transparent;color:var(--ink);font:600 12.5px/1 var(--font-body);cursor:pointer}
+.pk-sel select option{background:var(--raised);color:var(--ink)}
+.pk-filt .mode{height:32px}
 .pk-list{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .pk-g{position:sticky;top:0;z-index:1;padding:7px 12px;font:600 11.5px/1.3 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--paper);border-bottom:1px solid var(--line)}
 .pk-r{display:flex;align-items:stretch;border-bottom:1px solid var(--line)}
@@ -1218,6 +1224,7 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
   <div class="pk-top"><h2 id="pkTitle">Fotocamera</h2><button type="button" class="ibtn" id="pkClose" aria-label="Chiudi">×</button></div>
   <input id="pkQ" type="search" placeholder="Cerca per nome" aria-label="Cerca nella lista" autocomplete="off" spellcheck="false" enterkeyhint="search">
   <div class="pk-tools" id="pkTools"></div>
+  <div class="pk-tools pk-filt" id="pkFilt"></div>
   <div class="pk-list" id="pkList"></div>
 </div>
 
@@ -2646,12 +2653,44 @@ const camMeta = c => [camFmt(c), nfc(c.mp, 1) + ' MP', c.y, TYPE1[c.type]].filte
 const lensMeta = L => [(L.f2 > L.f1 ? `${nfc(L.f1, 1)}–${nfc(L.f2, 1)}` : nfc(L.f1, 1)) + ' mm', fN(L.n1) + (L.n2 > L.n1 ? '–' + fN(L.n2).slice(2) : ''), L.y || ''].filter(Boolean).join(' · ');
 const PK = { kind: '', from: null, items: [] };
 
+/* Filtri delle liste: marca, sensore, anni per le fotocamere; marca, zoom o fisso, focale e formato per gli obiettivi.
+   In Confronta anche «simili»: fotocamere con sensore uguale e pixel simili, obiettivi con focali simili a quelli delle schede. */
+const PKF = { cam: {}, lens: {} };
+const YEARS = [['2020', 'dal 2020', y => y >= 2020], ['2015', '2015–2019', y => y >= 2015 && y < 2020], ['2010', '2010–2014', y => y >= 2010 && y < 2015], ['old', 'prima del 2010', y => y > 0 && y < 2010]];
+const FOCS = [['wide', 'grandangolo (fino a 35 mm)', L => L.f2 <= 35], ['std', 'standard (fino a 105 mm)', L => L.f2 > 35 && L.f2 <= 105], ['tele', 'tele (fino a 300 mm)', L => L.f2 > 105 && L.f2 <= 300], ['super', 'supertele (oltre 300 mm)', L => L.f2 > 300]];
+const FILT = {
+  cam: [['brand', 'Marca', null, c => c.brand], ['fmt', 'Sensore', null, c => fmtName(c.w)], ['year', 'Anni', YEARS]],
+  lens: [['brand', 'Marca', null, L => L.brand], ['zoom', 'Tipo', [['z', 'zoom', L => L.f2 > L.f1], ['f', 'focale fissa', L => !(L.f2 > L.f1)]]], ['foc', 'Focale', FOCS],
+    ['cov', 'Formato', [['ff', 'per full frame', L => L.cov >= 43], ['apsc', 'per APS-C e più piccoli', L => L.cov < 43]]]],
+};
+function simRefs(kind) {   // le fotocamere o gli obiettivi delle schede del confronto
+  if (VIEW !== 'confronta' || !PINS.length) return [];
+  const out = [];
+  for (const p of PINS) { const c = p.cfg.cam && byId.get(p.cfg.cam), L = kind === 'cam' ? c : c && c.lens ? null : p.cfg.lens && byId.get(p.cfg.lens); if (L && out.indexOf(L) < 0 && (kind === 'cam' || L.id !== 'maksutov')) out.push(L); }
+  return out;
+}
+const similar = (kind, o, refs) => refs.some(r => kind === 'cam'
+  ? fmtName(o.w) === fmtName(r.w) && Math.abs(Math.log(o.p / r.p)) < 0.22   // stesso formato, pixel entro il 25% circa
+  : (o.f2 > o.f1) === (r.f2 > r.f1) && Math.abs(Math.log(o.f2 / r.f2)) < 0.34 && Math.abs(Math.log(o.f1 / r.f1)) < 0.5);   // focale massima entro il 40%, minima entro il 65%
+function pkKeep(kind) {   // la voce passa i filtri scelti?
+  const f = PKF[kind], defs = FILT[kind], refs = f.sim ? simRefs(kind) : [];
+  return it => {
+    const o = it.o; if (!o || it.v === '') return true;
+    for (const [k, , opts, get] of defs) {
+      const v = f[k]; if (!v) continue;
+      if (opts) { const op = opts.find(x => x[0] === v); if (op && !op[2](kind === 'cam' ? o.y : o)) return false; }
+      else if (get(o) !== v) return false;
+    }
+    return !refs.length || similar(kind, o, refs);
+  };
+}
+
 function pkGroups(kind) {   // [[titolo del gruppo, voci]]; voce: { v, name, meta, juza, dot, off }
   if (kind === 'cam') {
     const byDate = camSort === 'date', G = [['', [{ v: '', name: 'Libera', meta: 'pixel e sensore si scelgono con i cursori' }]]];
     for (const [t, label] of TYPES) {
       const list = CAMS.map((c, i) => i).filter(i => CAMS[i].type === t).sort((a, b) => (byDate ? CAMS[b].y - CAMS[a].y : 0) || COLL.compare(CAMS[a].name, CAMS[b].name));
-      if (list.length) G.push([`${label}${byDate ? ', dalla più recente' : ''} (${list.length})`, list.map(i => ({ v: String(i), name: CAMS[i].name, meta: camMeta(CAMS[i]), juza: CAMS[i].id }))]);
+      if (list.length) G.push([`${label}${byDate ? ', dalla più recente' : ''} (${list.length})`, list.map(i => ({ v: String(i), name: CAMS[i].name, meta: camMeta(CAMS[i]), juza: CAMS[i].id, o: CAMS[i] }))]);
     }
     return G;
   }
@@ -2664,7 +2703,7 @@ function pkGroups(kind) {   // [[titolo del gruppo, voci]]; voce: { v, name, met
       const where = MOUNTS[ft.mnt][0] + (!CAM ? '' : ft.via ? ' con ' + ft.via : ', attacco nativo');
       const label = CAM ? `${CLS[ft.cls]} · ${where}${short ? ' · ' + short : ''}` : where;
       if (!groups.has(label)) groups.set(label, { cls: ft.cls || 0, rank, label, items: [] });
-      groups.get(label).items.push({ v: String(i), name: Lz.name, meta: lensMeta(Lz), juza: juzaOk(Lz) ? Lz.id : '', dot: CAM ? ft.cls : undefined });
+      groups.get(label).items.push({ v: String(i), name: Lz.name, meta: lensMeta(Lz), juza: juzaOk(Lz) ? Lz.id : '', dot: CAM ? ft.cls : undefined, o: Lz });
     });
     return [['', [{ v: '', name: 'Libero', meta: 'focale e diaframma si scelgono con i cursori' }]]]
       .concat(Array.from(groups.values()).sort((a, b) => a.cls - b.cls || a.rank - b.rank || a.label.localeCompare(b.label)).map(g => [`${g.label} (${g.items.length})`, g.items]));
@@ -2677,6 +2716,10 @@ const pkCurrent = () => PK.kind === 'cam' ? (CAM ? String(CAMS.indexOf(CAM)) : '
 function pkRender() {
   const q = $('pkQ').value.trim(), cur = pkCurrent();
   let G = pkGroups(PK.kind);
+  if (FILT[PK.kind]) {   // i filtri: le voci che restano, gruppi vuoti via, conteggi aggiornati
+    const keep = pkKeep(PK.kind);
+    G = G.map(([t, items]) => { const k = items.filter(keep); return [t ? t.replace(/\(\d+\)$/, `(${k.length})`) : t, k]; }).filter(([, k]) => k.length);
+  }
   if (q) {   // con la ricerca: un elenco solo, dal risultato più vicino
     const sc = finder(q), all = [];
     for (const [, items] of G) for (const it of items) if (it.v !== '') { const s = sc(it.name); if (s > 0) all.push([s, it]); }
@@ -2692,11 +2735,24 @@ function pkRender() {
         + (it.juza ? `<a class="pk-i" href="${JUZA(it.juza)}" target="_blank" rel="noopener noreferrer" title="Scheda di ${esc(it.name)} su JuzaPhoto" aria-label="Scheda di ${esc(it.name)} su JuzaPhoto">ℹ️</a>` : '') + '</div>';
     }
   }
-  $('pkList').innerHTML = h || `<p class="pk-none">Nessun risultato per «${esc(q)}».${PK.kind === 'cam' ? ' Nel Database ci sono anche le fotocamere a pellicola e gli smartphone.' : PK.kind === 'lens' && CAM ? ' Qui ci sono solo gli obiettivi che si montano su questa fotocamera.' : ''}</p>`;
+  $('pkList').innerHTML = h || `<p class="pk-none">Nessun risultato${q ? ` per «${esc(q)}»` : ''}${PKF[PK.kind] && Object.keys(PKF[PK.kind]).some(k => PKF[PK.kind][k]) ? ' con questi filtri' : ''}.${PK.kind === 'cam' ? ' Nel Database ci sono anche le fotocamere a pellicola e gli smartphone.' : PK.kind === 'lens' && CAM ? ' Qui ci sono solo gli obiettivi che si montano su questa fotocamera.' : ''}</p>`;
 }
 function pkTools() {
   $('pkTools').innerHTML = PK.kind === 'cam' ? `<span>Ordina per</span><button type="button" class="mode" data-sort="name" aria-pressed="${camSort === 'name'}">nome</button><button type="button" class="mode" data-sort="date" aria-pressed="${camSort === 'date'}">data di uscita</button>`
     : PK.kind === 'lens' && CAM && !CAM.lens ? `<span><span class="cd c0"></span> compatibili &nbsp;<span class="cd c1"></span> in parte &nbsp;<span class="cd c2"></span> sconsigliati, sulla ${esc(CAM.name)}</span>` : '';
+  $('pkFilt').innerHTML = pkFilters();
+}
+function pkFilters() {   // menu dei filtri, con i valori che ci sono davvero nella lista
+  const kind = PK.kind, defs = FILT[kind]; if (!defs || (kind === 'lens' && CAM && CAM.lens)) return '';
+  const f = PKF[kind], objs = kind === 'cam' ? CAMS : LENSES.filter(L => L.id !== 'maksutov'), refs = simRefs(kind);
+  let h = '';
+  for (const [k, label, opts, get] of defs) {
+    const list = opts ? opts.map(o => [o[0], o[1]]) : Array.from(new Set(objs.map(get))).filter(Boolean).sort(COLL.compare).map(v => [v, v]);
+    h += `<label class="pk-sel${f[k] ? ' on' : ''}"><span>${label}</span><select data-f="${k}"><option value="">tutti</option>${list.map(([v, t]) => `<option value="${esc(v)}"${f[k] === v ? ' selected' : ''}>${esc(t)}</option>`).join('')}</select></label>`;
+  }
+  if (refs.length) h += `<button type="button" class="mode" data-sim aria-pressed="${!!f.sim}" title="Simili a: ${esc(refs.map(r => r.name).join(', '))}">≈ simili al confronto</button>`;
+  if (Object.keys(f).some(k => f[k])) h += '<button type="button" class="mode" data-freset>azzera</button>';
+  return h;
 }
 function pkOpen(kind, from) {
   PK.kind = kind; PK.from = from;
@@ -2727,6 +2783,13 @@ $('pkTools').addEventListener('click', e => {
   camSort = b.dataset.sort; store.set('camSort', camSort); pkTools(); pkRender();
 });
 $('pkQ').addEventListener('input', pkRender);
+$('pkFilt').addEventListener('change', e => { const k = e.target.dataset.f; if (!k) return; PKF[PK.kind][k] = e.target.value; pkTools(); pkRender(); });
+$('pkFilt').addEventListener('click', e => {
+  if (e.target.closest('[data-sim]')) PKF[PK.kind].sim = !PKF[PK.kind].sim;
+  else if (e.target.closest('[data-freset]')) PKF[PK.kind] = {};
+  else return;
+  pkTools(); pkRender();
+});
 $('pkClose').addEventListener('click', pkClose);
 $('pkBack').addEventListener('click', pkClose);
 $('pk').addEventListener('keydown', e => {
