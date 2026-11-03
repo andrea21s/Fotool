@@ -421,7 +421,7 @@ details.more[open]>summary{margin-bottom:12px}
   .v-sharp{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start}
   .s-bench,.s-panels,.s-profile{grid-column:1}
   .verdict-card,.s-nums{grid-column:2}
-  .s-bench{grid-row:1}.verdict-card{grid-row:1/3}.s-panels{grid-row:2/4}.s-nums{grid-row:3/5}.s-profile{grid-row:4}
+  .v-sharp>.th-seg{grid-row:1}.s-bench{grid-row:2}.verdict-card{grid-row:2/4}.s-panels{grid-row:3/5}.s-nums{grid-row:4/6}.s-profile{grid-row:5}
   .notes{grid-column:1/-1}
   .s-nums .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -499,6 +499,9 @@ details.more[open]>summary{margin-bottom:12px}
 
 /* ── GUIDA ── */
 .v-guide{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.th-seg{max-width:520px}
+.th-seg button{height:42px;font-size:14px}
+.v-guide>.th-seg,.v-sharp>.th-seg{grid-column:1/-1}
 .g-main{display:flex;flex-direction:column;gap:16px;min-width:0}
 .g-index ol{list-style:none;margin:0;padding:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px;counter-reset:g}
 .g-index li{flex:none;counter-increment:g}
@@ -541,6 +544,17 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
 .sim .tiles dd{font-size:16px}
 .sim .tiles dd.sub{-webkit-line-clamp:1}
 .sim-curve{height:150px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.ps-cv{aspect-ratio:1;max-height:440px;border-radius:8px;background:var(--stage)}
+.ps-row label{flex:none;width:1.4em;font:700 16px/1 var(--font-display)}
+.ps-k0{color:var(--accent)}.ps-k1{color:var(--k2)}
+.ps-row select{flex:1;min-width:0;height:38px;font:400 14px/1.3 var(--font-body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:0 8px;cursor:pointer}
+.ps-play{align-self:flex-start}
+.pt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pt-cell{margin:0;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pt-box{aspect-ratio:1;max-width:100%;background:#000;border-radius:6px;overflow:hidden}
+.pt-box canvas{width:100%;height:100%;image-rendering:pixelated}
+.pt-cell figcaption{display:flex;flex-direction:column;font-size:12.5px;line-height:1.35;color:var(--muted)}
+.pt-cell b{font:600 14px/1.3 var(--font-display);color:var(--ink)}
 .bars{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
 .bars li{display:grid;grid-template-columns:5.5em minmax(0,1fr) 4.5em;align-items:center;gap:8px;font-size:13px;height:24px}
 .bars i{height:12px;border-radius:6px;background:var(--line);overflow:hidden}
@@ -695,17 +709,13 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="8" height="14" rx="1.6"/><rect x="13" y="5" width="8" height="14" rx="1.6"/></svg>
         <span class="rl"><b>Confronta</b><small>cambia i valori, vedi le differenze</small></span><i class="badge" id="pinCount" hidden></i>
       </button>
-      <button type="button" role="tab" id="t-nitidezza" data-view="nitidezza" aria-selected="false" aria-controls="v-nitidezza" title="Nitidezza">
-        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="12" r="5.6"/><circle cx="12" cy="12" r="9" stroke-dasharray="2.4 2.6"/></svg>
-        <span class="rl"><b>Nitidezza</b><small>diffrazione e pixel, da vicino</small></span>
+      <button type="button" role="tab" id="t-guida" data-view="guida" aria-selected="false" aria-controls="v-guida" title="Teoria">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5c2.6-1 5.4-1 8.5.6 3.1-1.6 5.9-1.6 8.5-.6v13c-2.6-1-5.4-1-8.5.6-3.1-1.6-5.9-1.6-8.5-.6zM12 6.1v13"/></svg>
+        <span class="rl"><b>Teoria</b><small>lezioni, animazioni, banco ottico</small></span>
       </button>
       <button type="button" role="tab" id="t-database" data-view="database" aria-selected="false" aria-controls="v-database" title="Database">
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6"/></svg>
         <span class="rl"><b>Database</b><small>tutte le schede di JuzaPhoto</small></span>
-      </button>
-      <button type="button" role="tab" id="t-guida" data-view="guida" aria-selected="false" aria-controls="v-guida" title="Guida">
-        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5c2.6-1 5.4-1 8.5.6 3.1-1.6 5.9-1.6 8.5-.6v13c-2.6-1-5.4-1-8.5.6-3.1-1.6-5.9-1.6-8.5-.6zM12 6.1v13"/></svg>
-        <span class="rl"><b>Guida</b><small>le lezioni, con le prove</small></span>
       </button>
     </div>
   </nav>
@@ -811,7 +821,8 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
     </section>
 
     <!-- NITIDEZZA -->
-    <section class="view v-sharp" id="v-nitidezza" role="tabpanel" aria-labelledby="t-nitidezza" hidden>
+    <section class="view v-sharp" id="v-nitidezza" role="tabpanel" aria-labelledby="t-guida" hidden>
+      <div class="seg th-seg" role="group" aria-label="Parti della Teoria"><button type="button" data-goview="guida">📖 Lezioni e animazioni</button><button type="button" data-goview="nitidezza">🔬 Banco ottico</button></div>
       <section class="card stage-card s-bench hero" aria-labelledby="h-bench">
         <header class="card-h"><div><h2 id="h-bench">Il banco ottico</h2><p>La luce di un punto lontano, dall'obiettivo al sensore</p></div>
           <span class="eqbox"><canvas id="iris" aria-hidden="true"></canvas><span class="eq"><b id="bN">f/8</b><span id="bEq">= 400 mm ÷ 50 mm</span></span></span>
@@ -962,6 +973,7 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
 
     <!-- GUIDA: lezioni con il simulatore dentro -->
     <section class="view v-guide" id="v-guida" role="tabpanel" aria-labelledby="t-guida" hidden>
+      <div class="seg th-seg" role="group" aria-label="Parti della Teoria"><button type="button" data-goview="guida">📖 Lezioni e animazioni</button><button type="button" data-goview="nitidezza">🔬 Banco ottico</button></div>
       <nav class="card g-index" aria-label="Indice delle lezioni">
         <ol>
           <li><button type="button" data-goto="g-focale"><b>Focale</b><span>quanto grande viene il soggetto</span></button></li>
@@ -970,6 +982,8 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
           <li><button type="button" data-goto="g-difetti"><b>Difetti</b><span>il diaframma migliore</span></button></li>
           <li><button type="button" data-goto="g-pixel"><b>Pixel</b><span>la griglia che registra</span></button></li>
           <li><button type="button" data-goto="g-sensore"><b>Sensore</b><span>inquadratura e fattore di crop</span></button></li>
+          <li><button type="button" data-goto="g-pixsens"><b>Sensori e pixel</b><span>a grandezza vera, animati</span></button></li>
+          <li><button type="button" data-goto="g-portata"><b>La «portata»</b><span>più grande non vuol dire più dettaglio</span></button></li>
           <li><button type="button" data-goto="g-insieme"><b>Tutto insieme</b><span>chi comanda il dettaglio</span></button></li>
         </ol>
       </nav>
@@ -987,7 +1001,7 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
               <h3>Come funziona</h3>
               <p>La focale è lo «zoom» dell'obiettivo, in millimetri. Più è lunga, più un soggetto lontano diventa grande sul sensore: a 400 mm la Luna è grande il doppio che a 200 mm.</p>
               <p>Un soggetto più grande copre più pixel, quindi la foto registra più dettagli. Ma c'è un limite: se il foro dell'obiettivo resta uguale, allungando la focale ingrandisci anche la sfocatura, e da un certo punto in poi non guadagni più niente.</p>
-              <p>Il moltiplicatore (1,4× o 2×) si monta tra obiettivo e fotocamera e allunga la focale. Il foro resta lo stesso: il soggetto cresce, ma entra meno luce.</p>
+              <p>Il moltiplicatore (1,4× o 2×) si monta tra obiettivo e fotocamera e allunga la focale. Il foro resta lo stesso: il soggetto cresce, ma entra meno luce. Il 1,4× toglie 1 stop (metà della luce: f/2,8 diventa f/4), il 2× ne toglie 2 (un quarto: f/2,8 diventa f/5,6), quindi l'ISO raddoppia o quadruplica.</p>
             </div>
             <div class="sim" data-sim="focale"><p class="sim-do">Muovi la focale e prova i moltiplicatori: guarda quanto cresce la Luna e fin dove migliorano i crateri.</p></div>
             <div class="ls-text ls-b">
@@ -995,6 +1009,7 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
               <ul>
                 <li>Luna con la R7: allunga finché il diaframma arriva a f/11–16. Oltre ingrandisci solo la sfocatura.</li>
                 <li>Con il 100-400 il moltiplicatore 1,4× conviene; il 2× aggiunge poco e toglie un altro stop di luce.</li>
+                <li>Il moltiplicatore ingrandisce anche i difetti: rende bene solo su obiettivi molto nitidi (fissi e zoom di alta gamma), poco sugli zoom economici. L'autofocus può rallentare.</li>
                 <li>Più focale vuol dire anche più mosso a mano: servono tempi più brevi.</li>
               </ul>
               <details class="ls-more"><summary>Le formule</summary><ul>
@@ -1128,7 +1143,7 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
               <ul>
                 <li>Natura e Luna con un budget: APS-C con pixel piccoli e un tele, come R7 o R10 con il 100-400.</li>
                 <li>Paesaggi, notte e ritratti: il full frame raccoglie più luce.</li>
-                <li>Ritagliare una foto full frame è come usare un sensore più piccolo con meno megapixel.</li>
+                <li>Ritagliare una foto full frame, o usare la «modalità crop» della fotocamera, è come usare un sensore più piccolo con meno megapixel: la R5 (45 MP) in crop APS-C tiene circa 17 MP, la R7 sulla stessa area ne ha 32,5.</li>
               </ul>
               <details class="ls-more"><summary>Le formule</summary><ul>
                 <li>Fattore di crop = 43,3 mm ÷ diagonale del sensore.</li>
@@ -1138,12 +1153,69 @@ details.ls-more ul{margin-top:8px;font-size:14px;color:var(--muted)}
           </div>
         </article>
 
-        <article class="card lesson" id="g-insieme" aria-labelledby="gh-insieme">
-          <header class="ls-h"><span class="ls-n">7</span><div><h2 id="gh-insieme">Tutto insieme</h2><p>Il dettaglio della foto lo decide il limite più stretto.</p></div></header>
+        <article class="card lesson" id="g-pixsens" aria-labelledby="gh-pixsens">
+          <header class="ls-h"><span class="ls-n">7</span><div><h2 id="gh-pixsens">Sensori e pixel</h2><p>Quanto sono grandi davvero, e perché conta la densità dei pixel, non i megapixel.</p></div></header>
           <div class="ls-body">
             <div class="ls-text ls-a">
               <h3>Come funziona</h3>
-              <p>Quattro cose limitano il dettaglio: i pixel, l'obiettivo (diffrazione e difetti), il mosso e il rumore. Comanda la peggiore: migliorare le altre non cambia niente.</p>
+              <p>I sensori hanno misure molto diverse: il full frame è 36 × 24 mm, l'APS-C Canon 22,3 × 14,9 mm, quello della SX40 appena 6,2 × 4,6 mm. Lo stesso obiettivo forma la stessa immagine: un sensore più piccolo ne raccoglie solo il centro.</p>
+              <p>Per un soggetto lontano non conta quanti megapixel ha tutto il sensore, ma quanti pixel cadono sul soggetto: dipende dalla <b>densità</b>, cioè dalla grandezza di ogni pixel. Pixel più piccoli = più pixel sullo stesso soggetto.</p>
+              <p>La R5 ha 45 MP su un full frame, pixel da 4,39 µm. La R7 ne ha 32,5 su un APS-C, pixel da 3,20 µm. Ritagliando la R5 all'area dell'APS-C restano circa 17 MP: sullo stesso uccello lontano la R7 mette quasi il doppio dei pixel.</p>
+            </div>
+            <div class="sim anim" data-anim="pixsens"><p class="sim-do">Scegli due fotocamere: sopra i sensori a grandezza vera, sotto lo stesso pezzetto di immagine visto dai loro pixel. Con «Anima» passano tutti i formati.</p></div>
+            <div class="ls-text ls-b">
+              <h3>In pratica</h3>
+              <ul>
+                <li>Per Luna e animali lontani confronta la grandezza dei pixel (µm), non i megapixel.</li>
+                <li>Pixel più piccoli raccolgono meno luce ciascuno: a ISO alti la foto ha più grana.</li>
+                <li>Più pixel sul soggetto servono solo se l'obiettivo e l'aria danno abbastanza dettaglio: vedi «Tutto insieme».</li>
+              </ul>
+              <details class="ls-more"><summary>Le formule</summary><ul>
+                <li>Megapixel = larghezza × altezza del sensore in mm ÷ (pixel in µm)²: 22,3 × 14,9 ÷ 3,2² ≈ 32 MP.</li>
+                <li>Pixel sullo stesso soggetto, a parità di obiettivo: rapporto (p₁ ÷ p₂)² per area. R5 contro R7: (4,39 ÷ 3,20)² ≈ 1,9.</li>
+              </ul></details>
+            </div>
+          </div>
+        </article>
+
+        <article class="card lesson" id="g-portata" aria-labelledby="gh-portata">
+          <header class="ls-h"><span class="ls-n">8</span><div><h2 id="gh-portata">La «portata»</h2><p>Soggetto più grande, più pixel sul soggetto, più dettaglio: tre cose diverse.</p></div></header>
+          <div class="ls-body">
+            <div class="ls-text ls-a">
+              <h3>Come funziona</h3>
+              <p>Ingrandire una foto non aggiunge informazioni: se un uccello è alto 1000 pixel e lo ingrandisci il doppio sullo schermo, resta fatto di 1000 pixel. Per questo lo zoom digitale non rivela niente di nuovo.</p>
+              <p>Ci sono cinque modi per «arrivare più lontano», e non fanno la stessa cosa:</p>
+              <ul>
+                <li><b>Ritagliare</b>, o la modalità crop: soggetto più grande, ma gli stessi pixel. Nessun dettaglio in più.</li>
+                <li><b>Sensore con pixel più fitti</b>: più pixel sul soggetto, quindi più dettaglio, se l'ottica lo dà.</li>
+                <li><b>Moltiplicatore</b>: ingrandisce prima di scattare, quindi usa tutti i pixel. Ma toglie luce e ingrandisce anche i difetti.</li>
+                <li><b>Obiettivo più lungo</b>: come il moltiplicatore, senza perdere luce se il foro cresce. Da 500 a 600 mm i pixel sul soggetto crescono del 44%.</li>
+                <li><b>Avvicinarsi</b>: il migliore. Più pixel, più dettaglio e meno aria in mezzo.</li>
+              </ul>
+            </div>
+            <div class="sim anim" data-anim="portata"><p class="sim-do">Lo stesso pezzo di Luna, grande uguale e ingrandito 3 volte, ottenuto in quattro modi partendo dalla R7 con il 100-400 a 400 mm. Prova anche l'aria.</p></div>
+            <div class="ls-text ls-b">
+              <h3>In pratica</h3>
+              <ul>
+                <li>Prima di comprare «più portata», chiediti cosa vuoi: soggetto più grande, più pixel o più dettaglio.</li>
+                <li>Lo sfondo cambia solo con la focale e la distanza: il ritaglio non lo sfoca di più, moltiplicatore e obiettivo più lungo sì.</li>
+                <li>Da lontano, nelle ore calde, il tremolio dell'aria può annullare qualsiasi obiettivo: meglio avvicinarsi, o scattare al mattino presto.</li>
+              </ul>
+              <details class="ls-more"><summary>Le formule</summary><ul>
+                <li>Pixel sul soggetto ∝ (focale ÷ pixel)²: 600 ÷ 500 = 1,2, e 1,2² = 1,44.</li>
+                <li>Il moltiplicatore k moltiplica focale e f/ per k; la luce cala di k²: 1,4² ≈ 2 (1 stop), 2² = 4 (2 stop).</li>
+              </ul></details>
+            </div>
+          </div>
+        </article>
+
+        <article class="card lesson" id="g-insieme" aria-labelledby="gh-insieme">
+          <header class="ls-h"><span class="ls-n">9</span><div><h2 id="gh-insieme">Tutto insieme</h2><p>Il dettaglio della foto lo decide il limite più stretto.</p></div></header>
+          <div class="ls-body">
+            <div class="ls-text ls-a">
+              <h3>Come funziona</h3>
+              <p>Cinque cose limitano il dettaglio: i pixel, l'obiettivo (diffrazione e difetti), il mosso, il rumore e l'aria. Comanda la peggiore: migliorare le altre non cambia niente.</p>
+              <p>L'aria è il limite che nessun obiettivo supera: calore, umidità e foschia fanno tremolare e velano l'immagine, e più il soggetto è lontano più aria c'è in mezzo. Per la Luna conta la turbolenza: in una notte agitata un supertele non registra più di un 400 mm.</p>
               <p>Con la R7 e il 100-400 a 400 mm comandano i pixel, e il moltiplicatore 1,4× aiuta. Con il telescopio Maksutov, invece, ottica e pixel sono alla pari.</p>
               <p>Per questo fotocamere diverse possono dare la stessa Luna: cambiano la luce raccolta, il rumore e quanto puoi allungare.</p>
             </div>
@@ -1534,7 +1606,7 @@ const TOUR = [
 /* Stato della configurazione. Tutto quello che la pagina mostra si ricava da qui. S.Nset: f/ scelto con il cursore del
    diaframma; S.D: il diametro che ne risulta; S.ext: indice del moltiplicatore in EXTS; S.t: tempo di scatto in secondi;
    S.hand: a mano libera invece che su treppiede. */
-const S = { f: 400, D: 50, p: 3.2, s: 3, a: 0, D0: 50, fmt: 'apsc', Nset: 8, ext: '', t: 1 / 1000, hand: false };
+const S = { f: 400, D: 50, p: 3.2, s: 3, a: 0, D0: 50, fmt: 'apsc', Nset: 8, ext: '', t: 1 / 1000, hand: false, air: 0 };   // air: turbolenza dell'aria, in ″ (per ora solo nella Teoria)
 const DMAX = 130;   // valori liberi: diametro massimo, come un grande teleobiettivo o un piccolo telescopio
 const freeStops = () => { const n0 = Math.max(1, S.f / DMAX); return [n0].concat(STOP3.filter(N => N > n0 * 1.03)); };   // diaframmi possibili senza obiettivo scelto: il più aperto, poi i terzi di stop
 function freeAperture() { S.D = Math.min(S.f / Math.max(1, S.Nset), DMAX); S.D0 = S.D; }   // senza obiettivo scelto f/ resta, il diametro segue la focale
@@ -1566,13 +1638,13 @@ function derive(st, sc) {   // sc: la scena, per la luce; di solito quella della
   const need = 100 * N * N / (st.t * Math.pow(2, EV100[sc])), [i0, i1] = isoRange(), iso = Math.min(i1, Math.max(i0, need));   // need: l'ISO dell'esposizione giusta
   const E0 = FWD * st.p * st.p * 100 / need, e = E0 / 4, snr = e / Math.sqrt(e + RN * RN);   // E0: elettroni del bianco; i mezzitoni ne hanno un quarto
   const mvS = sc === 'moon' ? SKYV * st.t : 0, mvH = st.hand ? HANDV * st.t : 0, mv = Math.hypot(mvS, mvH);   // mosso, in ″
-  const opt = Math.hypot(opt0, mv), nz = 19 / snr * scale, q = 2 * scale / opt;   // nz: il dettaglio più piccolo che si stacca dal rumore (criterio di Rose, contrasto 30%)
+  const air = st.air || 0, opt = Math.hypot(opt0, mv, air), nz = 19 / snr * scale, q = 2 * scale / opt;   // l'aria sfoca come un difetto dell'obiettivo, ma non cala chiudendo   // nz: il dettaglio più piccolo che si stacca dal rumore (criterio di Rose, contrasto 30%)
   return {
     N, N0: st.f / st.D0, airyD, dla, nc, scale, dawes, sepUm, abAng, abUm: abAng / ARC * st.f * 1000,
     apx: airyD / st.p, spx: sepUm / st.p, fin: Math.min(1, N / nc),
     zone: N < dla ? 0 : N < 3 * st.p ? 1 : N <= 5 * st.p ? 2 : 3,
-    finest: Math.max(opt, 2 * scale, nz), limit: nz > Math.max(opt, 2 * scale) ? 4 : q > 1.2 ? 0 : mv > opt0 ? 3 : q < 0.83 ? 2 : 1,
-    t: st.t, iso, k: iso / need, ev: Math.log2(iso / need), E0, snr, mvS, mvH, mv,   // k > 1: troppa luce anche al minimo dell'ISO; < 1: poca anche al massimo
+    finest: Math.max(opt, 2 * scale, nz), limit: nz > Math.max(opt, 2 * scale) ? 4 : q > 1.2 ? 0 : air > Math.max(opt0, mv) ? 5 : mv > opt0 ? 3 : q < 0.83 ? 2 : 1,
+    t: st.t, iso, k: iso / need, ev: Math.log2(iso / need), E0, snr, mvS, mvH, mv, air, airUm: air / ARC * st.f * 1000,   // k > 1: troppa luce anche al minimo dell'ISO; < 1: poca anche al massimo
   };
 }
 /* Nitidezza: frequenza a cui ottica, difetti e pixel insieme scendono al 50% di contrasto (MTF50), fino a Nyquist. a = scala del pixel in ″. */
@@ -1702,7 +1774,7 @@ const rgba = (h, a) => `rgba(${hex(h).join(',')},${a})`;
 let staticDirty = true;
 function readTokens() {
   const cs = getComputedStyle(document.documentElement);
-  for (const k of ['ink', 'muted', 'line', 'surface', 'accent', 'accent-ink', 'stage', 'stage-line', 'stage-ink', 'stage-dim', 'light', 'gold', 'glass', 'blade', 'z1', 'z2', 'z3', 'z4', 'font-display', 'font-body'])
+  for (const k of ['ink', 'muted', 'line', 'surface', 'accent', 'accent-ink', 'stage', 'stage-line', 'stage-ink', 'stage-dim', 'light', 'gold', 'glass', 'blade', 'z1', 'z2', 'z3', 'z4', 'k2', 'font-display', 'font-body'])
     T[k] = cs.getPropertyValue('--' + k).trim();
   staticDirty = true;
 }
@@ -2463,7 +2535,7 @@ function optics(dd, eased) {
   const cov = LENS && LENS.cov < 90 ? Math.min(1, Math.hypot(F.w, F.h) / LENS.cov) : 1;   // un obiettivo per un sensore più grande: si usa il centro, dove la luce cala poco
   return { f: (eased && view.f) || S.f, D: (eased && view.D) || S.D, N: dd.N, N0, w: F.w, h: F.h, full, circleMm: full ? LENS.cov / 2 : 0,
     vig: 0.55 * Math.min(1, Math.pow(2.8 / N0, 0.8)) * cov * cov,   // vignettatura a tutta apertura: forte con gli obiettivi luminosi
-    p: S.p, scale: dd.scale, abUm: dd.abUm, finest: dd.finest, t: dd.t, iso: dd.iso, k: dd.k, ev: dd.ev, E0: dd.E0, snr: dd.snr, mvS: dd.mvS, mvH: dd.mvH, mv: dd.mv };
+    p: S.p, scale: dd.scale, abUm: dd.abUm, finest: dd.finest, t: dd.t, iso: dd.iso, k: dd.k, ev: dd.ev, E0: dd.E0, snr: dd.snr, mvS: dd.mvS, mvH: dd.mvH, mv: dd.mv, airUm: dd.airUm };
 }
 /* Un'anteprima: strati con la loro sfocatura, uno strato sopra per riflessi, vignettatura e cerchio dell'immagine, e un riquadro
    di dettaglio. Quella di Configura si muove; quelle di Confronta sono ferme e si ridisegnano solo quando cambia qualcosa. */
@@ -2555,7 +2627,7 @@ function renderZoom(sc, o, nPhoto) {   // il riquadro: nPhoto × nPhoto pixel de
   sc.box.hidden = !scn.raster;
   if (!scn.raster) { sc.zn = 0; return; }
   const cv = sc.cv, n = Math.max(4, Math.min(300, Math.round(nPhoto))), deg = o.scale / 3600;
-  const sp = Math.hypot(0.42 * LAM * o.N / o.p, o.abUm / 2.3548 / o.p);   // sfocatura in pixel
+  const sp = Math.hypot(0.42 * LAM * o.N / o.p, o.abUm / 2.3548 / o.p, (o.airUm || 0) / 2.3548 / o.p);   // sfocatura in pixel: diffrazione, difetti, aria
   const ss = sp > 1 ? 2 / sp : 2, sig = sp * ss, st = deg / ss;   // campioni per pixel: 2, meno se la luce è molto sfocata; così il calcolo resta piccolo a ogni f/
   // ponytail: il mosso va in una direzione sola, la Luna in orizzontale e la mano in verticale; oltre il 40% del riquadro non cambia più l'aspetto
   const bx = Math.min(0.4 * n, o.mvS / o.scale) * ss, by = Math.min(0.4 * n, o.mvH / o.scale) * ss;   // scie in campioni
@@ -2592,7 +2664,7 @@ function mainZoom() {
 }
 /* La foto in breve: cosa si vede nella scena e com'è lo scatto, un dato per casella; le caselle colorate segnalano un problema.
    Serve a Configura (configurazione in uso) e alle schede di Confronta (ognuna la sua): per questo riceve scena, ottica e stato. */
-const LIM1 = ['pixel', 'pixel e ottica', 'ottica', 'mosso', 'rumore'];
+const LIM1 = ['pixel', 'pixel e ottica', 'ottica', 'mosso', 'rumore', 'aria'];
 function capTiles(id, o, dd, st) {   // sei caselle per ogni scena: [etichetta, valore, nota, stato: '' | 'warn' | 'bad']
   // ponytail: l'obiettivo che non copre il sensore non ha una casella sua: gli angoli neri si vedono nella foto e la compatibilità lo dice
   const f = st.f, N = dd.N, T = [], pc = x => nfc(x, x < 10 ? 1 : 0);
@@ -3012,7 +3084,7 @@ function bestSentence() {
 
 /* I numeri della configurazione (Configura) e del confronto: tutti dallo stesso calcolo. */
 const ZONES = ['sotto il DLA', 'oltre il DLA', 'campionamento pieno', 'oltre il necessario'];
-const LIMITS = ['limita il sensore', 'ottica e sensore alla pari', "limita l'ottica", 'limita il mosso', 'limita il rumore'];
+const LIMITS = ['limita il sensore', 'ottica e sensore alla pari', "limita l'ottica", 'limita il mosso', 'limita il rumore', "limita l'aria"];
 function photoNumbers() {
   const F = FMTS[S.fmt], crop = 43.267 / Math.hypot(F.w, F.h), W = Math.round(F.w * 1000 / S.p), H = Math.round(F.h * 1000 / S.p);
   const fov = s => 2 * Math.atan(s / (2 * S.f)) * 180 / Math.PI, moon = S.f * 0.009042;   // la Luna: 0,518° di diametro
@@ -3187,9 +3259,9 @@ const VIEWS = ['configura', 'confronta', 'nitidezza', 'database', 'guida'];
 const SECS = {
   configura: ['Configura', 'Scegli fotocamera e obiettivo e guarda come viene la foto'],
   confronta: ['Confronta', 'Tocca una scheda e cambia i suoi valori: le foto mostrano subito le differenze'],
-  nitidezza: ['Nitidezza', 'Come la luce di un punto arriva ai pixel: diffrazione e campionamento'],
+  nitidezza: ['Teoria', 'Banco ottico: come la luce di un punto arriva ai pixel, diffrazione e campionamento'],
   database: ['Database', `Tutte le schede di JuzaPhoto: ${nf0(DB.c.length)} fotocamere e ${nf0(DB.l.length)} obiettivi e moltiplicatori`],
-  guida: ['Guida', 'Le lezioni, valore per valore, con un piccolo simulatore dentro'],
+  guida: ['Teoria', 'Le lezioni, valore per valore, con un simulatore o un\'animazione dentro'],
 };
 let VIEW = '';
 const app = $('app'), navTabs = Array.from(document.querySelectorAll('[data-view]')), WIDE = matchMedia('(min-width: 1280px)');
@@ -3204,7 +3276,9 @@ function show(v, keepScroll) {
   if (VIEW === 'confronta') cmpLeave();   // i comandi tornano in Configura, i cursori alla configurazione in uso
   VIEW = v; document.body.dataset.sezione = v;
   for (const k of VIEWS) $('v-' + k).hidden = k !== v;
-  navTabs.forEach(b => { const on = b.dataset.view === v; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+  navTabs.forEach(b => { const on = b.dataset.view === (v === 'nitidezza' ? 'guida' : v); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });   // Lezioni e Banco ottico: una voce sola, Teoria
+  document.querySelectorAll('[data-goview]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.goview === v)));
+  if (v === 'guida' || v === 'nitidezza') store.set('teoria', v);
   setText('secTitle', SECS[v][0]); setText('secDesc', SECS[v][1]);
   closeNow(); if (!WIDE.matches) railSet(false);
   try { if (location.hash.slice(1) !== v) history.replaceState(null, '', '#' + v); } catch (e) { /* indirizzo non modificabile */ }
@@ -3217,13 +3291,14 @@ function show(v, keepScroll) {
   dirty = true;
 }
 navTabs.forEach((b, i) => {
-  b.addEventListener('click', () => show(b.dataset.view));
+  b.addEventListener('click', () => show(b.dataset.view === 'guida' ? store.get('teoria', 'guida') : b.dataset.view));
   b.addEventListener('keydown', e => {   // frecce su e giù tra le sezioni, come nelle schede
     const k = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0; if (!k) return;
     e.preventDefault(); const n = navTabs[(i + k + navTabs.length) % navTabs.length]; n.focus(); show(n.dataset.view);
   });
 });
 addEventListener('hashchange', () => show(location.hash.slice(1)));
+document.querySelectorAll('[data-goview]').forEach(b => b.addEventListener('click', () => show(b.dataset.goview)));
 
 /* Menu delle sezioni: chiuso mostra solo le icone. Aperto, sugli schermi larghi sposta il contenuto (e lo ricorda),
    su quelli stretti va sopra il contenuto e si chiude scegliendo una sezione. */
@@ -3662,10 +3737,12 @@ const G_T = TIMES.filter(t => t <= 1.01);   // da 1/8000 a 1 s
 const gNear = (list, v) => list.reduce((b, x, i) => Math.abs(x - v) < Math.abs(list[b] - v) ? i : b, 0);
 const gExpo = /^(Esposizione|Troppa luce|Poca luce)$/;
 const gKey = t => t && [t[0], t[1], t[2], t[3] || 'key'];   // la casella che conta di più in questa lezione
-const G_EXT = { label: 'Moltiplicatore', opts: [[null, 'nessuno'], [gId(findExt, 'Canon RF 1.4x'), '1,4×'], [gId(findExt, 'Canon RF 2.0x'), '2×']],
+const G_X14 = gId(findExt, 'Canon RF 1.4x');
+const G_EXT = { label: 'Moltiplicatore', opts: [[null, 'nessuno'], [G_X14, '1,4×'], [gId(findExt, 'Canon RF 2.0x'), '2×']],
   val: c => c.ext || null, set: (c, v) => { const lf = c.f / gK(c); c.ext = v; c.f = lf * gK(c); } };   // la ghiera dello zoom resta dov'è
 const G_TIME = { label: 'Tempo', list: G_T, val: c => c.t, set: (c, v) => { c.t = v; }, out: r => `${tTxt(r.st.t)} · ISO ${isoTxt(r.dd.iso)}`,
   tog: ['a mano', c => !!c.hand, (c, v) => { c.hand = v; }] };
+const G_AIR = { label: 'Aria', opts: [['0', 'ferma'], ['1', 'calma'], ['2.5', 'normale'], ['5', 'mossa']], val: c => String(c.air || 0), set: (c, v) => { c.air = +v || 0; } };   // turbolenza in ″: una notte buona, una media, una calda
 const SIMS = {   // scena, configurazione, comandi, caselle; auto: tempo scelto per l'esposizione giusta all'ISO più basso
   focale: { scene: 'moon', auto: true, cfg: { cam: G_R7, lens: G_ZOOM, ext: null, f: 400, N: 1 },
     ctl: [{ label: 'Focale', list: [100, 135, 150, 200, 250, 300, 350, 400], val: c => c.f / gK(c), set: (c, v) => { c.f = v * gK(c); }, out: r => `${mm(r.st.f)} · ${fN(r.dd.N)}` }, G_EXT],
@@ -3692,11 +3769,12 @@ const SIMS = {   // scena, configurazione, comandi, caselle; auto: tempo scelto 
     tiles: (g, r) => { const F = FMTS[r.st.fmt], cr = 43.267 / Math.hypot(F.w, F.h);
       return [['Fattore di crop', nf(cr, 2), `400 mm inquadrano come ${Math.round(400 * cr)}`], g(/^Luna$/), gKey(g(/^Crateri$/)), ['Megapixel', `${nfc(F.w * F.h / (r.st.p * r.st.p), 0)} MP`, 'pixel sempre da 3,2 µm']]; } },
   insieme: { scene: 'moon', bars: true, cfg: { cam: G_R7, lens: G_ZOOM, ext: null, f: 400, N: 1, t: 1 / 250, hand: false },
-    ctl: [G_EXT, G_TIME], tiles: g => [gKey(g(/^Crateri$/)), g(gExpo), g(/^Rumore$/), g(/^Mosso$/)] },
+    ctl: [G_EXT, G_TIME, G_AIR], tiles: g => [gKey(g(/^Crateri$/)), g(gExpo), g(/^Rumore$/), g(/^Mosso$/)] },
 };
 
 function simCalc(m) {   // ottica, numeri e caselle della configurazione del simulatore
   return withConfig(m.cfg, () => {
+    S.air = m.cfg.air || 0;
     if (m.auto) S.t = G_T[gNear(G_T, 100 * Math.pow(S.f / S.D, 2) / (isoRange()[0] * Math.pow(2, EV100[m.scene])))];
     const dd = derive(S, m.scene); dd.curve = sharpCurve(S, dd);
     const o = optics(dd), T = capTiles(m.scene, o, dd, S), r = { o, dd, st: Object.assign({}, S), cfg: currentConfig() };
@@ -3707,6 +3785,7 @@ function simCalc(m) {   // ottica, numeri e caselle della configurazione del sim
 }
 function simDraw(m, zoom) {   // zoom: anche il riquadro al 100%
   if (VIEW !== 'guida') return;
+  if (m.draw) { m.stale = false; return m.draw(m); }   // le animazioni si disegnano da sole
   const r = simCalc(m), sc = m.sc;
   m.stale = false;
   m.ctl.forEach((c, i) => {
@@ -3727,18 +3806,15 @@ function simDraw(m, zoom) {   // zoom: anche il riquadro al 100%
 }
 function simLater(m, zoom) { m.zoom = m.zoom || zoom; if (m.raf) return; m.raf = requestAnimationFrame(() => { m.raf = 0; const z = m.zoom; m.zoom = false; simDraw(m, z); }); }
 function simCurve(m, r) {   // la curva della nitidezza di Nitidezza, da f/4 a f/64
-  const cv = m.curveEl, w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
-  const R = Math.min(window.devicePixelRatio || 1, 2);
-  if (cv.width !== Math.round(w * R) || cv.height !== Math.round(h * R)) { cv.width = Math.round(w * R); cv.height = Math.round(h * R); }
-  const ctx = cv.getContext('2d'), X = N => 18 + Math.min(1, Math.max(0, Math.log2(N / 4) / 4)) * (w - 36);
-  ctx.setTransform(R, 0, 0, R, 0, 0); ctx.clearRect(0, 0, w, h);
+  const g = gCanvas(m.curveEl); if (!g) return;
+  const [ctx, w, h] = g, X = N => 18 + Math.min(1, Math.max(0, Math.log2(N / 4) / 4)) * (w - 36);
   drawCurve(ctx, w, X, 18, 18, 24, h - 58, h - 24, r.dd, r.st.a);
   ctx.font = `600 11px ${T['font-display']}`; ctx.fillStyle = T.muted; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
   for (const s of [5.6, 8, 11, 16, 22, 32]) ctx.fillText(String(s).replace('.', ','), X(s), h - 7);
 }
-const LIMB = [['Pixel', 0], ['Ottica', 2], ['Mosso', 3], ['Rumore', 4]];
+const LIMB = [['Pixel', 0], ['Ottica', 2], ['Mosso', 3], ['Rumore', 4], ['Aria', 5]];
 function simBars(m, r) {   // il cratere più piccolo che ogni limite lascerebbe vedere: comanda il più grande
-  const dd = r.dd, v = [2 * dd.scale, Math.hypot(dd.dawes, dd.abAng), dd.mv, 19 / dd.snr * dd.scale], mx = Math.max.apply(null, v);
+  const dd = r.dd, v = [2 * dd.scale, Math.hypot(dd.dawes, dd.abAng), dd.mv, 19 / dd.snr * dd.scale, dd.air], mx = Math.max.apply(null, v);
   setHTML(m.barsEl, LIMB.map(([l, k], i) => `<li${dd.limit === k || (dd.limit === 1 && i < 2) ? ' class="top"' : ''}><span>${l}</span><i style="--v:${(v[i] / mx).toFixed(3)}"></i><b>${v[i] < 0.05 ? '–' : km(v[i] * KM)}</b></li>`).join(''));
 }
 
@@ -3773,7 +3849,123 @@ document.querySelectorAll('.sim[data-sim]').forEach(el => {
   });
   GSIM.push(m);
 });
-if (window.ResizeObserver) { const ro = new ResizeObserver(es => es.forEach(e => { const m = GSIM.find(x => x.sc.el === e.target); if (m && fitScene(m.sc, 2)) { m.stale = true; if (m.near) simLater(m, true); } })); GSIM.forEach(m => ro.observe(m.sc.el)); }
+
+/* Animazioni della Teoria: disegni propri nello stesso giro dei simulatori (si ridisegnano solo vicino allo schermo). */
+function gCanvas(cv) {   // canvas alla misura che ha sullo schermo, pulito: [ctx, larghezza, altezza]
+  const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return null;
+  const R = Math.min(window.devicePixelRatio || 1, 2);
+  if (cv.width !== Math.round(w * R) || cv.height !== Math.round(h * R)) { cv.width = Math.round(w * R); cv.height = Math.round(h * R); }
+  const ctx = cv.getContext('2d'); ctx.setTransform(R, 0, 0, R, 0, 0); ctx.clearRect(0, 0, w, h);
+  return [ctx, w, h];
+}
+const PS_CAMS = ['Canon PowerShot SX40 HS', 'Sony RX10 Mark IV', 'OM System OM-1', 'Canon EOS R7', 'Canon EOS R10', 'Canon EOS R5', 'Canon EOS R8', 'Fujifilm GFX100S'].map(findCam).filter(Boolean);
+const PS_L = 30, PS_F = [14.3, 15.6, 11, 5];   // il pezzetto di immagine: 30 µm di lato, con un anello (centro, raggi) grande uguale per tutti
+const shortName = c => c.name.replace(c.brand + ' ', '');
+const ANIMS = {
+  pixsens: {
+    build(m) {
+      const opt = PS_CAMS.map((c, i) => `<option value="${i}">${esc(c.name)} · ${esc(camFmt(c))}</option>`).join('');
+      m.el.insertAdjacentHTML('beforeend', '<canvas class="ps-cv" role="img"></canvas><div class="sim-ctl">'
+        + ['A', 'B'].map((k, i) => `<div class="ctl-row ps-row"><label for="ps-${k}" class="ps-k${i}">${k}</label><select id="ps-${k}" data-k="${i}">${opt}</select></div>`).join('')
+        + '<button type="button" class="act ghost ps-play" aria-pressed="false">▶ Anima</button></div><dl class="tiles"></dl>');
+      m.cv = m.el.querySelector('canvas'); m.tilesEl = m.el.querySelector('.tiles'); m.sel = Array.from(m.el.querySelectorAll('select'));
+      m.k = ['Canon EOS R5', 'Canon EOS R7'].map(n => Math.max(0, PS_CAMS.findIndex(c => c.name === n)));
+      m.sel.forEach((s, i) => { s.value = String(m.k[i]); });
+      m.el.addEventListener('change', e => { const k = e.target.dataset.k; if (k === undefined) return; m.k[+k] = +e.target.value; simLater(m); });
+      const pb = m.el.querySelector('.ps-play');
+      pb.addEventListener('click', () => {   // B passa per tutti i formati, dal più piccolo al più grande
+        const on = !m.timer; pb.setAttribute('aria-pressed', String(on)); pb.textContent = on ? '■ Ferma' : '▶ Anima';
+        if (!on) { clearInterval(m.timer); m.timer = 0; return; }
+        const step = () => { if (!m.near || VIEW !== 'guida') return; m.k[1] = (m.k[1] + 1) % PS_CAMS.length; m.sel[1].value = String(m.k[1]); simLater(m); };
+        step(); m.timer = setInterval(step, 2200);
+      });
+    },
+    draw(m) {
+      const g = gCanvas(m.cv); if (!g) return;
+      const [ctx, w, h] = g, A = PS_CAMS[m.k[0]], B = PS_CAMS[m.k[1]], tg = [A.w, A.h, A.p, B.w, B.h, B.p], col = [T.accent, T.k2], font = `600 12px ${T['font-display']}`;
+      m.cur = !m.cur || reduce ? tg.slice() : m.cur.map((v, i) => Math.abs(tg[i] - v) < tg[i] * 0.004 ? tg[i] : v + (tg[i] - v) * 0.2);   // i valori disegnati inseguono quelli scelti
+      const c = m.cur, cam = [[c[0], c[1], c[2]], [c[3], c[4], c[5]]];
+      ctx.fillStyle = T.stage; ctx.fillRect(0, 0, w, h);
+      // sopra: i sensori a grandezza vera tra loro, centrati; il più piccolo, tratteggiato, è anche l'area del ritaglio nel più grande
+      const top = h * 0.5, big = Math.max(36, c[0], c[3]), k = Math.min((top - 34) / (big / 1.5), (w - 24) / big), cx = w / 2, cy = 26 + (top - 26) / 2;   // scala: il full frame o il più grande dei due
+      ctx.lineWidth = 1; ctx.strokeStyle = T['stage-line']; ctx.setLineDash([]);
+      for (const f of FMT_ORDER) { const F = FMTS[f]; if (F.w <= big + 0.1) ctx.strokeRect(cx - F.w * k / 2, cy - F.h * k / 2, F.w * k, F.h * k); }
+      [0, 1].sort((a, b) => cam[b][0] * cam[b][1] - cam[a][0] * cam[a][1]).forEach((i, n) => {
+        const [sw, sh] = cam[i]; ctx.fillStyle = rgba(col[i], 0.25); ctx.strokeStyle = col[i]; ctx.lineWidth = 2; ctx.setLineDash(n ? [5, 4] : []);
+        ctx.fillRect(cx - sw * k / 2, cy - sh * k / 2, sw * k, sh * k); ctx.strokeRect(cx - sw * k / 2, cy - sh * k / 2, sw * k, sh * k);
+      });
+      ctx.setLineDash([]); ctx.font = font; ctx.textBaseline = 'top';
+      ctx.textAlign = 'left'; ctx.fillStyle = col[0]; ctx.fillText('A · ' + shortName(A), 10, 8);
+      ctx.textAlign = 'right'; ctx.fillStyle = col[1]; ctx.fillText('B · ' + shortName(B), w - 10, 8);
+      // sotto: lo stesso pezzetto di immagine (stessa focale, stessa distanza) visto dai pixel di A e di B
+      const by = top + 6, s = Math.max(20, Math.min((w - 36) / 2, h - by - 26)), [FX, FY, R1, R0] = PS_F, cnt = [];
+      [cx - s - 6, cx + 6].forEach((x, i) => {
+        const p = cam[i][2], u = s / PS_L, n = Math.ceil(PS_L / p); let sum = 0;
+        ctx.save(); ctx.beginPath(); ctx.rect(x, by, s, s); ctx.clip();
+        for (let j = 0; j < n; j++) for (let q = 0; q < n; q++) {   // ogni pixel prende la media della luce che lo copre (16 campioni)
+          let cov = 0;
+          for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) { const X = (q + (a + 0.5) / 4) * p - FX, Y = (j + (b + 0.5) / 4) * p - FY, r2 = X * X + Y * Y; if (r2 < R1 * R1 && r2 > R0 * R0) cov++; }
+          if (!cov) continue; cov /= 16; sum += cov;
+          ctx.fillStyle = rgba(T.light, cov); ctx.fillRect(x + q * p * u, by + j * p * u, p * u + 0.5, p * u + 0.5);
+        }
+        ctx.strokeStyle = T['stage-line']; ctx.lineWidth = 1; ctx.beginPath();
+        for (let v = p; v < PS_L; v += p) { ctx.moveTo(x + v * u, by); ctx.lineTo(x + v * u, by + s); ctx.moveTo(x, by + v * u); ctx.lineTo(x + s, by + v * u); }
+        ctx.stroke(); ctx.strokeStyle = rgba(col[i], 0.85); ctx.lineWidth = 1.5; ctx.beginPath();
+        for (const r of [R1, R0]) { ctx.moveTo(x + (FX + r) * u, by + FY * u); ctx.arc(x + FX * u, by + FY * u, r * u, 0, 2 * Math.PI); }
+        ctx.stroke(); ctx.restore();
+        ctx.strokeStyle = col[i]; ctx.lineWidth = 2; ctx.strokeRect(x, by, s, s);
+        ctx.fillStyle = col[i]; ctx.textAlign = 'center'; ctx.fillText(`${nf(p, 2)} µm · ${nf0(sum)} px`, x + s / 2, by + s + 7);
+        cnt.push(sum);
+      });
+      const bi = A.w * A.h >= B.w * B.h ? 0 : 1, Bg = [A, B][bi], Sm = [A, B][1 - bi], crop = Sm.w * Sm.h / (Bg.p * Bg.p), r = Math.pow(A.p / B.p, 2);
+      m.cv.setAttribute('aria-label', `Sensore A ${A.name}, ${nf(A.w, 1)} × ${nf(A.h, 1)} mm, pixel da ${nf(A.p, 2)} µm; sensore B ${B.name}, ${nf(B.w, 1)} × ${nf(B.h, 1)} mm, pixel da ${nf(B.p, 2)} µm.`);
+      setHTML(m.tilesEl, tilesHTML([
+        ['Megapixel', `${nfc(A.mp, 0)} · ${nfc(B.mp, 0)}`, 'MP, A · B'],
+        ['Pixel', `${nf(A.p, 2)} · ${nf(B.p, 2)} µm`, 'A · B'],
+        [`${'AB'[bi]} ritagliata`, `${nfc(crop, crop < 10 ? 1 : 0)} MP`, Bg === Sm ? 'stesso sensore' : `nell'area di ${'AB'[1 - bi]}`],
+        ['Sul soggetto', Math.abs(r - 1) < 0.05 ? 'pari' : r > 1 ? `B ${nfc(r, 1)}× A` : `A ${nfc(1 / r, 1)}× B`, 'più pixel', Math.abs(r - 1) < 0.05 ? '' : 'key'],
+      ]));
+      if (m.cur.some((v, i) => v !== tg[i])) simLater(m);
+    },
+  },
+  portata: {
+    cfgs: [   // lo stesso pezzo di Luna in quattro modi, partendo dalla R7 con il 100-400 a 400 mm
+      ['Ritaglio 1,4×', { cam: G_R7, lens: G_ZOOM, f: 400, N: 1 }],
+      ['Moltiplicatore 1,4×', { cam: G_R7, lens: G_ZOOM, ext: G_X14, f: 560, N: 1 }],
+      ['Obiettivo da 560 mm', { cam: G_R7, lens: null, f: 560, N: 5.6 }],
+      ['R5 ritagliata', { cam: gId(findCam, 'Canon EOS R5'), lens: G_ZOOM, f: 400, N: 1 }],
+    ],
+    build(m) {
+      m.air = 0;
+      m.el.insertAdjacentHTML('beforeend', '<div class="pt-grid">' + m.cfgs.map(([t]) => `<figure class="pt-cell"><div class="pt-box"><canvas width="8" height="8"></canvas></div><figcaption><b>${t}</b><span></span><span></span><span></span></figcaption></figure>`).join('')
+        + `</div><div class="sim-ctl"><div class="ctl"><div class="ctl-row"><span class="lb" id="pt-air">Aria</span><div class="seg" role="group" aria-labelledby="pt-air">`
+        + G_AIR.opts.map(([v, t]) => `<button type="button" data-v="${v}" aria-pressed="${v === '0'}">${t}</button>`).join('') + '</div></div></div></div>');
+      m.cells = Array.from(m.el.querySelectorAll('.pt-cell')).map(f => ({ sc: { id: 'moon', box: f.querySelector('.pt-box'), cv: f.querySelector('canvas'), lines: false }, sp: f.querySelectorAll('span') }));
+      m.el.addEventListener('click', e => {
+        const b = e.target.closest('button[data-v]'); if (!b) return;
+        m.air = +b.dataset.v; m.el.querySelectorAll('button[data-v]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); simLater(m);
+      });
+    },
+    draw(m) {
+      const rs = m.cfgs.map(([, cfg]) => simCalc({ cfg: Object.assign({ air: m.air, t: 1 / 250, hand: false }, cfg), scene: 'moon', auto: true, tiles: () => [], ctl: [] }));
+      const ref = rs[1].o.scale;   // tutti grandi come la foto a 560 mm: chi ha meno pixel sulla Luna li mostra più grossi
+      rs.forEach((r, i) => {
+        const c = m.cells[i], W = c.sc.box.clientWidth; if (!W) return;
+        renderZoom(c.sc, r.o, W * ref / r.o.scale / 3);   // al 300%: un pixel della foto a 560 mm = 3 punti dello schermo
+        setText(c.sp[0], `${mm(r.st.f)} · ${fN(r.dd.N)}`);
+        setText(c.sp[1], `Luna larga ${nf0(r.st.f * Math.tan(0.518 * RADG) * 1000 / r.st.p)} px`);
+        setText(c.sp[2], `crateri da ${km(r.dd.finest * KM)}`);
+      });
+    },
+  },
+};
+document.querySelectorAll('.sim[data-anim]').forEach(el => {
+  const def = ANIMS[el.dataset.anim]; if (!def) return;
+  const m = Object.assign({}, def, { el, near: !window.IntersectionObserver, stale: true, raf: 0, zoom: false });
+  m.build(m); GSIM.push(m);
+});
+const gBox = m => m.sc ? m.sc.el : m.el;
+if (window.ResizeObserver) { const ro = new ResizeObserver(es => es.forEach(e => { const m = GSIM.find(x => gBox(x) === e.target); if (m && (!m.sc || fitScene(m.sc, 2))) { m.stale = true; if (m.near) simLater(m, true); } })); GSIM.forEach(m => ro.observe(gBox(m))); }
 if (window.IntersectionObserver) {
   const io = new IntersectionObserver(es => es.forEach(e => { const m = GSIM.find(x => x.el === e.target); m.near = e.isIntersecting; if (m.near && m.stale) simLater(m, true); }), { rootMargin: '300px 0px' });
   GSIM.forEach(m => io.observe(m.el));

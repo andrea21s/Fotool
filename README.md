@@ -14,16 +14,10 @@ It includes the JuzaPhoto database: over 1,400 cameras and 1,500 lenses and tele
 
 - **Configura (Set up)**: choose camera, lens and teleconverter and see the photo in four scenes: landscape, portrait, Moon and backlight. Tiles summarise subject size, depth of field, exposure, noise and motion blur.
 - **Confronta (Compare)**: up to four setups side by side. Duplicate one, change a single value and immediately see the difference in the photo and in the 100% crop.
-- **Nitidezza (Sharpness)**: an optical bench showing how the light from a point reaches the pixels. It covers the Airy disk, the diffraction-limited aperture, critical sampling and the sharpest f-stop, plus a guided demo.
+- **Teoria (Theory)**: everything that explains the numbers, in one place.
+  - *Lessons and animations*: nine plain-language lessons, each with a small simulator or animation: focal length, aperture, shutter speed, aberrations, pixels, sensor size, **sensors and pixels** (sensor formats at true scale and the same detail seen by two pixel grids), **"reach"** (cropping, a teleconverter, a longer lens and a bigger-pixel body compared on the same patch of Moon, with air turbulence) and how it all works together.
+  - *Optical bench*: how the light from a point reaches the pixels: the Airy disk, the diffraction-limited aperture, critical sampling and the sharpest f-stop, plus a guided demo.
 - **Database**: every JuzaPhoto entry, with search, filters, sorting and a link to the original page.
-- **Guida (Guide)**: seven plain-language lessons, each with a small built-in simulator:
-  - focal length;
-  - aperture;
-  - shutter speed;
-  - aberrations;
-  - pixels;
-  - sensor size;
-  - how they all work together.
 
 ## How it works
 
@@ -33,7 +27,8 @@ The calculations use basic optics:
 - diffraction (Airy disk), resolving power and pixel sampling (Nyquist);
 - a simple model of lens aberrations;
 - exposure with auto ISO, plus photon and read noise;
-- motion blur from the Moon drifting across the sky and from handheld shooting with stabilisation.
+- motion blur from the Moon drifting across the sky and from handheld shooting with stabilisation;
+- atmospheric turbulence (seeing) for long lenses, in the Theory section.
 
 They are estimates meant to show differences, not lab measurements.
 
